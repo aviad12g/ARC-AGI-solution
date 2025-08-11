@@ -8,71 +8,9 @@ This repository combines optional GPU‑accelerated perception with symbolic pro
 
 Our system transforms raw pixel grids into rich symbolic representations through topological analysis, applies admissible heuristic search over a domain-specific language (DSL), and leverages transformer models for proposal generation. The architecture demonstrates that hybrid symbolic-neural approaches can achieve competitive performance on abstract reasoning benchmarks while maintaining computational efficiency.
 
-## Table of Contents
-
-1. [System Architecture](#system-architecture)
-2. [Theoretical Foundations](#theoretical-foundations)
-3. [Performance Benchmarks](#performance-benchmarks)
-4. [Installation and Usage](#installation-and-usage)
-5. [Implementation Details](#implementation-details)
-6. [Evaluation and Results](#evaluation-and-results)
-7. [Development Guide](#development-guide)
-8. [Future Directions](#future-directions)
-
 ## System Architecture
 
 The ARC-AGI Solver employs a four-stage pipeline that transforms visual patterns into executable programs:
-
-```mermaid
-graph TD
-    A["Raw ARC Grid<br/>30×30 pixels"] --> B["Blob Labeling<br/>Union-Find"]
-    B --> C["Connected Components<br/>+ Hole Detection"]
-    C --> D["Symmetry Analysis<br/>D₄ Group Operations"]
-    D --> E["Feature Extraction<br/>50-D Vector"]
-    
-    E --> F["DSL Program Space<br/>Geometric + Color Ops"]
-    F --> G["A* Search Engine<br/>Two‑Tier Heuristics"]
-    G --> H["LLM Proposals<br/>(optional)"]
-    H --> I["Solution Program<br/>Minimal DSL Sequence"]
-    
-    subgraph "Perception Module"
-        B
-        C
-        D
-        E
-    end
-    
-    subgraph "Reasoning Engine"
-        F
-    end
-    
-    subgraph "Search Engine"
-        G
-        H
-    end
-    
-    subgraph "Synthesis Module"
-        I
-    end
-### 1. Perception Module
-
-The perception module transforms raw ARC grids into structured symbolic representations through several mathematical techniques:
-
-#### Blob Labeling and Connected Components
-- Union‑find based connected components (CPU by default; GPU path optional)
-- Supports both 4‑connectivity and 8‑connectivity
-- Topological hole detection via flood‑fill
-
-#### Symmetry Detection
-- **Bitboard-based symmetry analysis** for square grids (D₄ group operations)
-- **Numpy fallback** for non-square grids supporting reflections and 180° rotations
-- Comprehensive detection of: rotations (90°, 180°, 270°), reflections (horizontal, vertical, diagonal)
-
-#### Feature Extraction
-The system computes a **50-dimensional invariant vector** for each grid:
-
-```
-FeatureVector ∈ ℝ⁵⁰ = [σ₁...σ₈, λ₁...λ₃, PH₁...PH₃₂, μ₁...μ₇]
 ```
 
 Where:
