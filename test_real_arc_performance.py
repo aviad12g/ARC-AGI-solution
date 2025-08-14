@@ -8,7 +8,7 @@ This script tests our optimized solver with:
   - D₄ symmetry minimization
   - Learned heuristic weights
   - Optimized search efficiency and pruning
-  - Enhanced caching system
+  - Enhanced caching system 
 
 Tests performance improvements and success rates on real ARC tasks.
 """
